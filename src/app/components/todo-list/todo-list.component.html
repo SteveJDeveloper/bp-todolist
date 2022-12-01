@@ -1,0 +1,51 @@
+<div class="container">
+    <!-- TITULO -->
+    <div class="centrado">
+        <h2 class="text-color">TODO LIST</h2>
+    </div>
+    <!-- FORMULARIO -->
+    <div class="row centrado" *ngIf="error">
+        <div class=" col-6 centrado-sin-margin error">
+            Error al agregar un nuevo item
+        </div>
+    </div>
+    <div class="row centrado">
+        <div class="col-5">
+            <input type="text" class="form-control" [(ngModel)]="newTask.description">
+        </div>
+        <div class="col-1">
+            <button class="btn bg-color" (click)="saveTask()"> Agregar </button>
+        </div>
+    </div>
+    <!-- LISTA -->
+    <div class="row centrado" *ngIf="tasks.length > 0 else vacio">
+        <div *ngFor="let task of tasks" class="col-7">
+            <div class="row task">
+                <div class="col-1 mrg-top">
+                    <input class="form-check-input" type="checkbox" [checked]="task.status == 1" (change)="updateTask(task)">
+                </div>
+                <div class="col-10 text-color mrg-top">
+                    <div [ngClass]="{'tachado': task.status == 1}">{{task.description}}</div>
+                </div>
+                <div class="col-1">
+                    <button class="btn bg-color" (click)="deleteTask(task.id)"> Eliminar</button>
+                </div>
+            </div><br>
+        </div>
+    </div>
+    <ng-template #vacio>
+        <div class="row centrado">
+            <div class="centrado-sin-margin">
+                <p>La lista se encuentra vacia</p>
+            </div>
+        </div>
+    </ng-template>
+    <!-- NOTIFICACION -->
+    <div class="row centrado">
+        <div class="col-4 contorneado">
+            <div class="centrado-sin-margin">
+                {{doneTasks}} de {{tasks.length}} tarea(s) completada(s)
+            </div>
+        </div>
+    </div>
+</div>
